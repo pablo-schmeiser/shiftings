@@ -63,7 +63,7 @@ class DetailDayView(DayView):
         shift_filter = (Q(start__date=theday) | Q(end__date=theday, end__gt=theday) |
                         Q(start__lt=theday, end__gt=theday))
         shift_filter &= self.get_filters()
-        shifts = Shift.objects.filter(shift_filter).order_by('start', 'end', 'shift_type')
+        shifts = Shift.objects.filter(shift_filter).order_by('start', 'end', 'shift_type', 'name')
         return [shift for shift in shifts if shift.can_see(self.request.user)]
 
 
@@ -75,7 +75,7 @@ class ShiftTypesDayView(DayView):
 
     def get_shifts(self, theday: date):
         shift_filter = Q(start__date=theday) & self.get_filters()
-        shifts = Shift.objects.filter(shift_filter).order_by('start', 'shift_type')
+        shifts = Shift.objects.filter(shift_filter).order_by('start', 'end', 'shift_type', 'name')
         shifts = [shift for shift in shifts if shift.can_see_details(self.request.user)]
         add_default = False
         shift_idx_type = {

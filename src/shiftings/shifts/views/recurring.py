@@ -33,9 +33,10 @@ class RecurringShiftDetailView(OrganizationMemberMixin, DetailView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         today = date.today()
+        ## FIXME: Why is this only the first 5 elements? And should we use the reverse name order?
         context.update({
-            'passed_created_shifts': self.object.created_shifts.filter(start__lt=today).order_by('-start')[:5],
-            'upcoming_created_shifts': self.object.created_shifts.filter(start__gte=today).order_by('start')[:5]
+            'passed_created_shifts': self.object.created_shifts.filter(start__lt=today).order_by('-start', '-end', 'name')[:5],
+            'upcoming_created_shifts': self.object.created_shifts.filter(start__gte=today).order_by('start', 'end', 'name')[:5]
         })
         return context
 

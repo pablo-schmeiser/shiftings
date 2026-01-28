@@ -41,6 +41,7 @@ class ParticipationPermissionForm(forms.ModelForm):
         inherited: Optional[QuerySet[ParticipationPermission]] = \
             getattr(self.related_object, 'inherited_participation_permissions', None)
         if inherited:
+            ## TODO: WTF??? What is this ordering, why is it reversed and why is only the first result used? What if there are multiple results?
             existing = inherited.filter(organization=organization).order_by('-permission_type_field').first()
             if existing and existing.permission_type >= permission:
                 self.add_error('permission_type_field',

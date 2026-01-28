@@ -19,6 +19,7 @@ class SelectOrgShiftTemplateGroupForm(forms.Form):
 
     def __init__(self, organization: Organization, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        ## FIXME: Why order by place and name? Why not the other way around? What is an org_shift_template_group???
         self.fields['template_group'].queryset = ShiftTemplateGroup.objects.filter(
             organization=organization).order_by('place', 'name')
 

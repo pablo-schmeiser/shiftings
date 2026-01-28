@@ -101,8 +101,9 @@ class OrganizationAdminView(OrganizationPermissionMixin, DetailView):
                 'form': self.create_membership_form(membership_type)
             })
         context['membership_types'] = membership_types
+        ## FIXME: Why is this ordered in reverse? Should name and shift_type be reversed too?
         context['shifts'] = get_pagination_context(self.request,
-                                                   self.object.shifts.order_by('-start', '-end', 'name').all(),
+                                                   self.object.shifts.order_by('-start', '-end', 'shift_type', 'name').all(),
                                                    25, 'shifts')
         context['shifts_claimable'] = OrganizationDummyUser.objects.filter(organization=self.object).count() > 0
         return context

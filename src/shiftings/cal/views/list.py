@@ -56,7 +56,7 @@ class DetailListView(ListView):
 
     def get_shifts(self) -> Any:
         shift_filter = self.get_filters()
-        shifts = Shift.objects.filter(shift_filter).order_by('start', 'end', 'shift_type')[:settings.MAX_LIST_ENTRIES]
+        shifts = Shift.objects.filter(shift_filter).order_by('start', 'end', 'shift_type', 'name')[:settings.MAX_LIST_ENTRIES]
         return [shift for shift in shifts if shift.can_see(self.request.user)]
 
 
@@ -68,7 +68,7 @@ class ShiftTypesListView(ListView):
 
     def get_shifts(self):
         shift_filter = self.get_filters()
-        shifts = Shift.objects.filter(shift_filter).order_by('start', 'shift_type')[:settings.MAX_LIST_ENTRIES]
+        shifts = Shift.objects.filter(shift_filter).order_by('start', 'end', 'shift_type', 'name')[:settings.MAX_LIST_ENTRIES]
         shifts = [shift for shift in shifts if shift.can_see_details(self.request.user)]
         add_default = False
         shift_idx_type = {

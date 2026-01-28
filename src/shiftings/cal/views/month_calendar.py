@@ -67,7 +67,7 @@ class BaseCalendar(HTMLCalendar):
 
         time_filter = (Q(start__date=_date) | Q(end__date=_date, end__gt=_date) |
                        Q(start__lt=_date, end__gt=_date))
-        return Shift.objects.filter(self.shift_filter & time_filter).order_by('start', 'end')
+        return Shift.objects.filter(self.shift_filter & time_filter).order_by('start', 'end', 'shift_type', 'name')
 
     def can_see_shift(self, shift: Shift) -> bool:
         return True

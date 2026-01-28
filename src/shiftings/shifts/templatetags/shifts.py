@@ -61,7 +61,7 @@ def member_shift_summary(context, org, show_all_users: bool = False, show_future
         filtered_user_ids.update(BaseUser.objects.filter(pk__in=claimed_ids).values_list('pk', flat=True))
         users = BaseUser.objects.filter(pk__in=filtered_user_ids)
     members = []
-    for user in users.order_by('username'):
+    for user in users.order_by('display_name','username'):
         pks = [user.pk] + list(OrganizationDummyUser.objects.filter(claimed_by=user).values_list('pk', flat=True))
         group_amounts = [
             org.shifts.filter(time_filter, participants__user__pk__in=pks, shift_type__group=shift_type_group).count()
@@ -76,6 +76,7 @@ def member_shift_summary(context, org, show_all_users: bool = False, show_future
             'total': sum(group_amounts) + others_amount
         })
     members.sort(key=lambda member: -member['total'])
+    ## TODO: Collapse members with zero shifts for easier readability
     context['members'] = members
     return context
 

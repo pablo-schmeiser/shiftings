@@ -89,6 +89,7 @@ class Organization(models.Model):
         from shiftings.accounts.models import User
         return User.objects.filter(pk__in=user_pks)
 
+    ## TODO: What is the intended behavior if there are multiple next shifts/events?
     @property
     def next_shift(self) -> Optional[Shift]:
         return self.shifts.filter(end__gte=date.today()).order_by('start').first()

@@ -36,9 +36,10 @@ class ShiftFeed(ABC, ICalFeed, Generic[T]):
     def description(self, obj: T) -> str:
         pass
 
+    ## TODO: Find out, why this is ordered in reverse order. Should name be reversed too?
     @abstractmethod
     def items(self, obj: T) -> QuerySet[Shift]:
-        return Shift.objects.all().order_by('-start')
+        return Shift.objects.all().order_by('-start', '-end', 'name')
 
     def item_title(self, item: Shift) -> str:
         return item.name

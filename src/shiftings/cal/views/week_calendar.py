@@ -20,7 +20,8 @@ class WeekView(CalendarBaseView):
         shift_filter = (Q(start__date=theday) | Q(end__date=theday) |
                         Q(start__lt=theday, end__gt=theday))
         shift_filter &= self.get_filters()
-        shifts = Shift.objects.filter(shift_filter).order_by('shift_type', 'start', 'end')
+        ## TODO: Why is this different from the ordering in other views?
+        shifts = Shift.objects.filter(shift_filter).order_by('shift_type', 'start', 'end', 'name')
         context.update({
             'theday': theday,
             'nextday': theday + timedelta(days=1),
