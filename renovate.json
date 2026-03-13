@@ -7,6 +7,7 @@
   "description": "Renovate configuration for the shiftings project, running every weekend before before 6:00am local time in Berlin, Germany.",
   "timezone": "Europe/Berlin",
   "schedule": "* 0-5 * * 0,6",
+  "labels": ["dependencies"],
 
   "packageRules": [
     {
