@@ -21,18 +21,18 @@ repos:
       - id: no-commit-to-branch
       - id: detect-private-key
   - repo: https://github.com/crate-ci/typos
-    rev: v1.39.2
+    rev: v1.44.0
     hooks:
       - id: typos
-  # - repo: https://github.com/adrienverge/yamllint
-  #  rev: v1.37.1
-  #  hooks:
-  #    - id: yamllint
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.38.0
+    hooks:
+      - id: yamllint
   - repo: https://github.com/trufflesecurity/trufflehog
-    rev: v3.91.1
+    rev: v3.93.8
     hooks:
       - id: trufflehog
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.29.1
+    rev: v8.30.0
     hooks:
       - id: gitleaks
